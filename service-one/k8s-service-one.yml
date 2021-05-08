@@ -5,12 +5,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: java
+      app: service-one
   replicas: 3 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
-        app: java
+        app: service-one
     spec:
       containers:
         - name: spring-cloud-k8s-service-one
