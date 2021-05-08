@@ -1,0 +1,10 @@
+eureka :
+  instance:
+    hostname: "${HOSTNAME}.eureka-server"
+  client :
+    register-with-eureka : true
+    fetch-registry : true
+    serviceUrl :
+      defaultZone : ${EUREKA_SERVER_ADDRESS}
+  server :
+    enable-self-preservation : true

@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: prd
+  application:
+    name: cloud-eureka-server
+
+server:
+  port: 8761

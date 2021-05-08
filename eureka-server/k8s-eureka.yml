@@ -1,0 +1,82 @@
+##eureka集群地址定义
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eureka-address
+data:
+  ##根据节点数来，有几个写几个，从0开始
+  eureka_service_address: http://eureka-server-0.eureka-server:10080/eureka,http://eureka-server-1.eureka-server:10080/eureka,http://eureka-server-2.eureka-server:10080/eureka
+---
+##对外暴露
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server-nodeport
+  labels:
+    app: eureka
+spec:
+  type: NodePort
+  ports:
+    - port: 8761
+      nodePort: 30876
+      name: eureka
+  selector:
+    app: eureka
+---
+##内部域名访问，添加后可以以 hostname.service-name 访问
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka-server
+  labels:
+    app: eureka
+spec:
+  clusterIP: None
+  ports:
+    - port: 8761
+      name: eureka
+  selector:
+    app: eureka
+---
+##有状态应用定义
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: eureka-server
+spec:
+  serviceName: 'eureka-server'
+  # n instances
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eureka
+  template:
+    metadata:
+      labels:
+        app: eureka
+    spec:
+      containers:
+        - name: eureka
+          image: lhwarthas/spring-cloud-k8s-eureka:latest
+          ports:
+            - containerPort: 8761
+          env:
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-address
+                  key: eureka_service_address
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8761
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
