@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: prd
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-one
+          uri: lb://cloud-service-one
+          predicates:
+            - Path=/service-one/**
+          filters:
+            - StripPrefix=1
+        - id: service-two
+          uri: lb://cloud-service-two
+          predicates:
+            - Path=/service-two/**
+          filters:
+            - StripPrefix=1
+server:
+  port: 10000

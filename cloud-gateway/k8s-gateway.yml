@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-cloud-k8s-gateway
+spec:
+  selector:
+    matchLabels:
+      app: java
+  replicas: 3 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: java
+    spec:
+      containers:
+        - name: spring-cloud-k8s-gateway
+          image: lhwarthas/spring-cloud-k8s-gateway:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 10000
+          env:
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-address
+                  key: eureka_service_address
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 10000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 10000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60

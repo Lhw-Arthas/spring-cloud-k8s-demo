@@ -19,6 +19,8 @@
     <modules>
         <module>eureka-server</module>
         <module>cloud-gateway</module>
+        <module>service-one</module>
+        <module>service-one-client</module>
     </modules>
 
 

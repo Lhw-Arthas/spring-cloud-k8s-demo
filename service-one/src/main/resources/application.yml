@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: prd
+  application:
+    name: cloud-service-one
+server:
+  port: 10010
