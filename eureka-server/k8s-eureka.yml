@@ -5,7 +5,7 @@ metadata:
   name: eureka-address
 data:
   ##根据节点数来，有几个写几个，从0开始
-  eureka_service_address: http://eureka-server-0.eureka-server:10080/eureka,http://eureka-server-1.eureka-server:10080/eureka,http://eureka-server-2.eureka-server:10080/eureka
+  eureka_service_address: http://eureka-server-0.eureka-server:8761/eureka,http://eureka-server-1.eureka-server:8761/eureka,http://eureka-server-2.eureka-server:8761/eureka
 ---
 ##对外暴露
 apiVersion: v1
