@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-cloud-k8s-service-two
+spec:
+  selector:
+    matchLabels:
+      app: service-two
+  replicas: 3 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: service-two
+    spec:
+      containers:
+        - name: spring-cloud-k8s-service-two
+          image: lhwarthas/spring-cloud-k8s-service-two:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 10020
+          env:
+            - name: EUREKA_SERVER_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: eureka-address
+                  key: eureka_service_address
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 10020
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 10020
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60

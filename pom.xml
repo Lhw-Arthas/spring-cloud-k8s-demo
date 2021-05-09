@@ -21,6 +21,8 @@
         <module>cloud-gateway</module>
         <module>service-one</module>
         <module>service-one-client</module>
+        <module>service-two</module>
+        <module>service-two-client</module>
     </modules>
 
 
