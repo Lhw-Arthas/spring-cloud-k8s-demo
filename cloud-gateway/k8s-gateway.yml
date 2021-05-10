@@ -25,7 +25,7 @@ spec:
                   name: eureka-address
                   key: eureka_service_address
             - name: SERVER_PORT
-              value: 10000
+              value: '10000'
           livenessProbe:
             httpGet:
               path: /
