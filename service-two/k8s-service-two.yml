@@ -24,6 +24,8 @@ spec:
                 configMapKeyRef:
                   name: eureka-address
                   key: eureka_service_address
+            - name: SERVER_PORT
+              value: 10020
           livenessProbe:
             httpGet:
               path: /
@@ -38,5 +40,9 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                command: ["curl -X POST http://localhost:$SERVER_PORT/service-actuator/serviceregistry?status=DOWN -H 'Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8'", "&&", "sleep 15"]
       restartPolicy: Always
       terminationGracePeriodSeconds: 60

@@ -5,3 +5,14 @@ spring:
     name: cloud-service-one
 server:
   port: 10010
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: serviceregistry
+      base-path: /service-actuator

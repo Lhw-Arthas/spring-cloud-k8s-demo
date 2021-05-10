@@ -5,3 +5,14 @@ spring:
     name: cloud-service-two
 server:
   port: 10020
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: serviceregistry
+      base-path: /service-actuator

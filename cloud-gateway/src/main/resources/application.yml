@@ -20,3 +20,14 @@ spring:
             - StripPrefix=1
 server:
   port: 10000
+
+eureka:
+  client:
+    registry-fetch-interval-seconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: serviceregistry
+      base-path: /service-actuator
