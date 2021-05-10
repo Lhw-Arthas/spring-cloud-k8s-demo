@@ -41,7 +41,7 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 5
       restartPolicy: Always
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 120
 
 ---
 apiVersion: v1

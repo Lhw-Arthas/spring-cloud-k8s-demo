@@ -45,4 +45,4 @@ spec:
               exec:
                 command: ["/bin/sh", "-c", "bin/preStop.sh"]
       restartPolicy: Always
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 120
