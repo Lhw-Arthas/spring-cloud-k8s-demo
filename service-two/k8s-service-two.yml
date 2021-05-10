@@ -43,6 +43,6 @@ spec:
           lifecycle:
             preStop:
               exec:
-                command: ["curl -X POST http://localhost:$SERVER_PORT/service-actuator/serviceregistry?status=DOWN -H 'Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8'", "&&", "sleep 15"]
+                command: ["/bin/sh", "-c", "curl -X POST http://localhost:$SERVER_PORT/service-actuator/serviceregistry?status=DOWN -H 'Content-Type: application/vnd.spring-boot.actuator.v2+json;charset=UTF-8' && sleep 15"]
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
